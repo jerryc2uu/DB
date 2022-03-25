@@ -403,7 +403,7 @@ WHERE
                 
 */
 
---  [BEETWEEN ~ AND 연산자] 급여가 1000 ~ 3000 사이인 사원들의 이름, 급여 조회
+--  [BETWEEN ~ AND 연산자] 급여가 1000 ~ 3000 사이인 사원들의 이름, 급여 조회
 SELECT
     ename, sal
 FROM
@@ -475,7 +475,7 @@ WHERE
         부서 번호가 10번인 사원들의 이름, 직급, 입사일, 부서번호 조회
 */
 SELECT
-    ename, job, hiredate, deptno
+    ename 이름, job 직급, hiredate 입사일, deptno 부서번호
 FROM
     emp
 WHERE
@@ -494,7 +494,6 @@ FROM
 WHERE
     job = 'SALESMAN'
 ;
-
 /*
     문제 3]
         급여가 1000보다 적은 사원들의 이름, 직급, 급여 조회
@@ -581,7 +580,7 @@ SELECT
 FROM
     emp
 WHERE
-    ename BEETWEEN 'C' AND 'M' 
+    ename BETWEEN 'C' AND 'M'
 ;
 /*
     문제 10]
@@ -604,7 +603,7 @@ SELECT
 FROM
     emp
 WHERE
-    ename = 'S____'
+    ename LIKE 'S____'
 ;    
 /*
     문제 12]
@@ -615,9 +614,8 @@ SELECT
 FROM
     emp
 WHERE
-    hiredate = '__/__/03'
+    hiredate LIKE '__/__/03'
 ;
-
 /*
     문제 13]
         이름이 4글자이거나 5글자인 사원들의 이름, 직급 조회
@@ -627,10 +625,8 @@ SELECT
 FROM
     emp
 WHERE
-    ename = '____' 
-    AND '_____'  
+    ename LIKE '____' or  ename LIKE '_____'  
 ;
-
 /*
     문제 14]
         입사 년도가 81년도이거나 82년도인 사원들의 이름, 급여, 입사일 조회
@@ -640,9 +636,8 @@ SELECT
 FROM
     emp         
 WHERE
-    hiredate = '81/__/__'   
+    hiredate LIKE '81/__/__' OR hiredate LIKE '82/__/__'
 ; 
-
 /*
     문제 15]
         이름이 'S'로 끝나는 사원들의 이름, 급여, 커미션을 조회
@@ -652,5 +647,28 @@ SELECT
 FROM
     emp
 WHERE
-   ename = '%S'
+   ename LIKE '%S'
+;
+
+/*
+    데이터 결합 연산자
+        
+        [형식]
+            
+            데이터1 || 데이터2    
+*/
+
+SELECT 10 || 20 FROM dual;
+
+-- 사원들 이름에 MR. 붙여서 조회하라
+SELECT
+    'Mr.' || ename 이름, sal || '달러' 급여, hiredate 입사일 
+FROM
+    emp
+;
+
+SELECT
+    ename 이름, sal 원급여, sal + 1000 "보너스 적용 급여", sal * 1.5 인상급여
+FROM
+    emp
 ;
