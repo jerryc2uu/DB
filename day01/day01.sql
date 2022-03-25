@@ -668,7 +668,31 @@ FROM
 ;
 
 SELECT
-    ename 이름, sal 원급여, sal + 1000 "보너스 적용 급여", sal * 1.5 인상급여
+    ename 이름, sal 원급여, sal + 1000 "보너스 적용 급여", sal * 1.5 인상급여, sal * 12 연봉
+FROM
+    emp
+;
+
+-- join (관계형 데이터베이스의 꽃), 분리된 테이블을 다시 합치는 작업
+SELECT
+    e.ename 사원이름, e.mgr 상사번호, s.ename 상사이름, s.sal 상사급여
+FROM
+    emp e, emp s
+WHERE
+    e.mgr = s.empno(+)
+;
+
+--테이블 여러 개 나열해서도 뽑을 수 있다.
+SELECT
+    ename 이름, sal 급여, grade 등급
+FROM
+    emp, salgrade
+WHERE
+    sal BETWEEN losal AND hisal
+;
+
+SELECT
+    distinct deptno 부서번호
 FROM
     emp
 ;
