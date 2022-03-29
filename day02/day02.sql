@@ -11,6 +11,24 @@
     이런 종류의 데이터베이스 관리시스템을 
             RDBMS(개체들 간 관계를 형성해서 데이터 관리하는 시스템, 관계형 데이터베이스 관리 시스템)라고 한다.
             
+            
+        +)  
+            정형 데이터베이스 : 데이터 추가 시 데이터의 형태가 갖춰져야 추가되는 데이터베이스
+                
+                사원번호 사원이름 직급 널 입사일 급여 널 널
+                                
+                                분산저장, 분산처리 불가 (중앙집중식)
+            
+            비정형 데이터베이스 : 형태가 갖춰지지 않아도 저장할 수 있는 데이터베이스
+                               
+                                분산저장, 분산처리 가능
+                                보안문제, 성능 저하...
+                                
+                                NoSQL
+                                    MongoDB
+                                    
+                                NewSQL
+   
     테이블 : 필드(컬럼, 열)와 레코드(ROW, 행)로 구성된 데이터를 보관하는 가장 작은 단위
     
         필드 : 같은 개념의 데이터 모임(컬럼, 열, 칸...)
@@ -661,6 +679,15 @@ FROM
         사원이름이 5글자 이하인 사원들의 사원번호, 이름, 이름글자수, 직급, 급여 조회
         출력은 글자수가 작은 사원부터 정렬
 */
+SELECT
+    empno 사원번호, ename 이름, LENGTH(ename) 글자수, job 직급, sal 급여 
+FROM
+    emp
+WHERE   
+    LENGTH(ename) <= 5
+ORDER BY
+    LENGTH(ename)
+;
 
 
 /*
@@ -668,28 +695,57 @@ FROM
         사원이름 뒤에 '사원'을 붙여서 사원이름, 직급, 입사일 조회
 */
 SELECT
-    ename, job, hiredate
+   CONCAT(ename, ' 사원') 이름, job 직급, hiredate 입사일
 FROM
     emp
 ;
-
 /*
     문제3]
         사원 이름의 마지막 글자가 'N'인 사원들의 이름, 입사일, 부서번호 조회
         부서번호 순으로 오름차순 정렬
         같은 부서는 이름순으로
 */
+SELECT
+    ename, hiredate, deptno
+FROM
+    emp
+WHERE
+    SUBSTR(ename, -1, 1) = 'N'
+ORDER BY
+    deptno, ename
+;
 
 /*
     문제4]
         사원 이름 중 'a'가 존재하지 않는 사원의 정보를 조회
 */
+SELECT
+    empno 사원번호, ename 이름, job 직급, hiredate 입사일, sal 급여
+FROM
+    emp
+WHERE
+    INSTR(ename, 'a') = 0 -- 데이터베이스에서는 위치값이 1부터 시작, 따라서 0이 나온다는 건 포함 안 돼있다는 말과 같음
+;
+
+SELECT
+    empno 사원번호, ename 이름, job 직급, hiredate 입사일, sal 급여
+FROM
+    emp
+WHERE
+    ename NOT LIKE'%a%'
+;
+
 
 /*
     문제5]
         사원 이름 중 뒤 2글자만 남기고 앞글자는 모두 '#'으로 대체해서
         이름, 입사일, 급여 조회
 */
+SELECT
+    ename 이름, SUBSTR(ename, -2) 뒤두글자, LPAD(SUBSTR(ename, -2), LENGTH(ename), '#') 꺼내온이름, hiredate 입사일, sal 급여
+FROM
+    emp
+;
 
 /*
     문제6]
@@ -697,7 +753,133 @@ FROM
         나머지 문자는 '*'로 대체하고 @는 표시하고 .com도 표시하고
         나머지는 '*'로 대체해서 조회되는 질의명령 작성
 */
-
+SELECT
+    CONCAT(
+        CONCAT(
+            RPAD(
+                LPAD(
+                    SUBSTR('jennie@githrd.com' , 3, 1), 
+                    3, 
+                    '*'
+                ), 
+                INSTR('jennie@githrd.com', '@') - 1 , 
+                '*'
+            ), 
+            '@'
+        ),
+        LPAD(
+            SUBSTR(
+                'jennie@githrd.com', 
+                INSTR('jennie@githrd.com' , '.')
+            ),
+            LENGTH(
+                SUBSTR(
+                    'jennie@githrd.com', 
+                    INSTR('jennie@githrd.com', '@') + 1
+                )
+            ),
+            '*'
+        )
+    ) 제니메일
+FROM
+    dual
+;
 /*
-
+    문제 1 ]
+        사원의 이름, 직급, 입사일, 급여를 조회하세요.
+        단, 급여가 높은 사람부터 먼저 출력되도록 하세요.
 */
+SELECT
+    ename, job, hiredate, sal
+FROM
+    emp
+ORDER BY
+    sal DESC
+;
+/*
+    문제 2 ]
+        사원들의 
+            사원이름, 직급, 입사일, 부서번호를 조회하세요.
+        단, 부서번호 순서대로 출력하고 
+        같은 부서이면 입사일 순서대로 출력되도록 하세요.
+*/
+SELECT
+    ename, job, hiredate, deptno
+FROM
+    emp
+ORDER BY
+    deptno, hiredate
+;
+/*
+    문제 3 ]
+        입사월이 5월인 사원의 
+            사원이름, 직급, 입사일을 조회하세요.
+            단, 입사일이 빠른 사람이 먼저 조회되도록 하세요.
+*/
+SELECT
+    ename, job, hiredate
+FROM
+    emp
+WHERE
+    hiredate Like '__/05/__'
+ORDER BY
+    hiredate
+;
+/*
+    문제 4 ] 연산자 사용해서 해결하세요.
+        이름의 마지막 글자가 S인 사람의 
+            사원이름, 직급, 입사일을 조회하세요.
+        단, 직급 순서대로 조회하고 
+        같은 직급이면 입사일 순서대로 출력되도록 하세요.
+*/
+SELECT
+    ename, job, hiredate
+FROM
+    emp
+WHERE
+    SUBSTR(ename, -1, 1) = 'S'
+ORDER BY
+    job,  hiredate
+;
+/*
+    문제 5 ] NVL() 사용해서 처리
+        커미션을 27% 인상하여 조회하세요.
+        단, 커미션이 없는 사원은 커미션을 100으로 계산해서
+            100에 27% 를 인상하도록 하세요.
+        단, 소수이상 2째 자리에서 반올림하여 출력하세요.
+*/
+SELECT
+    ename 이름, sal 원급여, comm 원래커미션, ROUND(((NVL(comm, 100)) * 1.27), -2) 인상커미션
+FROM
+    emp
+;
+
+SELECT
+    ename 이름, sal 원급여, comm 원래커미션, ROUND(NVL(comm * 1.27, 100 * 1.27), -2) 인상커미션
+FROM
+    emp
+;
+/*
+    문제 6 ]
+        급여의 15%를 인상한 급액과 커미션을 합쳐서 
+        사원이름, 직급, 급여를 출력하세요.
+        단, 급여는 소수이상 첫째자리에서 버림하여 출력하도록 하세요.
+        그리고 커미션이 없는 사람은 0으로 가정하여 계산하도록 하세요.
+*/
+SELECT
+    ename 이름, job 직급, sal 급여, comm 커미션, TRUNC((sal * 1.15 + NVL(comm, 0)), -1) 인상급여
+FROM
+    emp
+;
+/*
+    문제 7 ]
+        급여를 100으로 나누어 떨어지는 사람만 
+            사원이름, 직급, 급여를 조회하세요.
+*/
+SELECT
+    ename 이름, job 직급, sal 급여
+FROM
+    emp
+WHERE
+    MOD(sal, 100) = 0
+;
