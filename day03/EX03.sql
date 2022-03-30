@@ -114,12 +114,13 @@ ORDER BY
         를 조회하세요.
 */
 SELECT
-    ename 이름, sal 급여, hiredate 입사일, 
-    TO_CHAR(hiredate, 'day') 입사요일, 
-    ROUND(CASE WHEN TO_CHAR(hiredate, 'day') = '토요일' OR 
-                    TO_CHAR(hiredate, 'day') = '일요일' THEN sal * 1.2
+    ename 이름, sal 급여, TO_CHAR(hiredate, 'YYYY/MM/DD') 입사일, 
+    TO_CHAR(hiredate, 'DY') 입사요일, 
+    ROUND(CASE WHEN TO_CHAR(hiredate, 'DY') = '토' OR 
+                    TO_CHAR(hiredate, 'DY') = '일' THEN sal * 1.2
          ELSE sal * 1.1
     END) 지급급여
+-- DECODE(TO_CHAR(hiredate, 'DY'), '토', sal * 1.2, '일', sal * 1.2, sal * 1.1) 지급급여 
 FROM
     emp
 ;
