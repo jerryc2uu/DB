@@ -1,0 +1,123 @@
+
+[문제1]
+
+CREATE TABLE member(
+    no NUMBER(4)
+        CONSTRAINT MB_NO_UK UNIQUE
+        CONSTRAINT MB_NO_NN NOT NULL,
+    name VARCHAR2(6 CHAR)
+        CONSTRAINT MB_NAME_NN NOT NULL,
+    id VARCHAR2(8 CHAR)
+        CONSTRAINT MB_ID_UK UNIQUE
+        CONSTRAINT MB_ID_NN NOT NULL,
+    pw VARCHAR2(8 CHAR)
+        CONSTRAINT MB_PW_NN NOT NULL,
+    isshow CHAR(1)
+        CONSTRAINT MB_SHOW_CK CHECK(isshow IN('Y', 'N'))
+        CONSTRAINT MB_SHOW_NN NOT NULL
+);
+
+[문제2]
+
+ALTER TABLE board
+MODIFY body
+    CONSTRAINT BOARD_BODY_NN NOT NULL
+;
+
+[문제3]
+
+SELECT DISTINCT
+	deptno 부서번호
+FROM	
+	scott.emp
+;
+
+[문제4]
+SELECT
+	empno사원번호, ename 사원이름, comm 이전커미션, NVL(comm + 100, 50)  지급커미션
+FROM
+	emp
+;
+
+[문제5]
+
+SELECT
+	empno 사원번호, RPAD(SUBSTR(ename, 1, 2), LENGTH(ename), '*') 사원이름, job 직급, MONTHS_BETWEEN(SYSDATE - hiredate) 근무개월수 
+FROM
+	emp
+;
+
+
+[문제6]
+SELECT
+	count(*) "comm 받는 사람"
+FROM
+	emp
+WHERE
+	comm IS NOT NULL
+;
+
+-----------
+
+SELECT
+	count(comm) "comm 받는 사람"
+FROM
+	emp
+;
+
+[문제7]
+SELECT
+	e.empno, e.ename, e.sal, m - e.sal 부서최대급여와의차이, m 부서최대급여, a 부서평균급여
+FROM
+	emp e,
+	
+	(SELECT
+		deptno dno, MAX(sal) m, AVG(sal) a		
+	 FROM
+		emp
+	 GROUP BY
+		deptno
+	 )
+WHERE
+	deptno = dno
+;
+
+
+[문제8]
+SELECT
+	empno 사원번호, ename 사원이름, grade 급여등급, dname 부서이름, loc 부서위치
+FROM
+	emp, dept, salgrade
+WHERE
+	emp.deptno = dept.deptno
+	AND sal BETWEEN losal AND hisal
+;
+
+[문제9]
+CREATE OR REPLACE VIEW emp_dept
+
+AS
+	SELECT
+		empno, ename, deptno, dname
+	FROM
+		emp, dept
+	WHERE
+		emp.deptno = dept.deptno
+;
+
+[문제10]
+CREATE SEQUENCE memb_seq
+	INCREMENT BY 1000
+;
+
+
+
+
+
+
+
+
+
+
+
+

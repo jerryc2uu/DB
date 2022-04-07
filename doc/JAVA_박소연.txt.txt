@@ -1,0 +1,324 @@
+# JAVA_박소연.txt
+
+[문제1]
+	boolean, char, byte, short, int, long, float, double
+
+[문제2]
+	
+	int num = 75000;
+
+[문제3]
+	1) a = 11, b = 22
+	2) a = 10, b = 22
+	3) a = 10, b = 22
+	
+	
+[문제4]
+	
+	1. private : 자기 자신의 클래스 내에서만 사용 가능
+	
+	2. 생략된 경우 : 같은 패키지 소속의 클래스들까지만 사용 가능
+	
+	3. protected : 상속받은 하위 클래스 + 같은 패키지 소속의 클래스들에서만 사용 가능 
+	
+	4. public : 모든 곳에서 사용 가능
+   	 
+[문제5]
+	정상적이지 않다.
+	
+	이유: 클래스이름에는 특수문자(#)가 들어갈 수 없다.
+
+[문제6]
+	public class FiveDan {
+		
+	}
+	
+	public static void main(String args[] ) {
+	
+	int a = 5;
+	int b = 1;
+	do {
+	 	System.out.println( a+ "x" + b + " = "+ a*b);
+	 	b++
+	} while(b<=9);	
+	
+
+	}
+	
+	
+[문제7]
+	pubic class Member() {
+		private int mno;
+		private String name, id;
+	}
+
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void getMno() {
+		return mno;
+	}
+
+	public void getName() {
+		return name;
+	}
+
+	public void getId() {
+		return id;
+	}
+
+
+[문제8]
+	
+
+[문제9]
+	public class Plus implements Calc() {
+		private int a, b, hap;
+		
+	
+	public Plus() {}
+
+	public Plus(int a, int b) {
+		this.a = a;
+		this.b = b;
+		cal();
+	}
+	
+	public void setA(int a) {
+		this.a = a;
+	}
+	
+	public void setB(int b) {
+		this.b = b;
+	}
+	
+	@Override
+	public double cal(int a, int b) {
+		hap = a + b;
+	}
+	
+	public int getA() {
+		return a;
+	}
+	
+	public int getB() {
+		retunr b;
+	}
+
+	public double getHap() {
+		return hap;
+	}
+}
+	
+	
+
+[문제10]
+	public class Semo extends Figure {
+	
+		private int width, height;
+		private float area;
+
+	public Nemo() {}
+	
+	public Nemo(int width, int height) {
+		this.width = width;
+		this.height = height;
+		Area();
+	}
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	@Override
+	public float Area() {
+		return area;
+	}
+	
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public void setArea() {
+		area = width * height * 0.5;
+	}
+
+	
+	
+}
+	
+-------------------------------------
+
+	public class Nemo extends Figure {
+	
+		private int width, height;
+		private float area;
+
+	public Nemo() {}
+	
+	public Nemo(int width, int height) {
+		this.width = width;
+		this.height = height;
+		Area();
+	}
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	@Override
+	public float Area() {
+		return area;
+	}
+	
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public void setArea() {
+		area = width * height;
+	}
+
+	
+	
+}
+
+	
+
+[문제11]
+	
+	
+
+==============================
+
+[문제1]
+	long, int, short, byte
+
+[문제2]
+	double val = 3.14;
+
+[문제3]
+	10
+
+[문제4]
+	char[] ch = new char[10];
+	for(int i = 0; i < 10 ; i++) {
+		char munja = (char)('A' + i);
+		ch[i] = munja;
+	}
+
+	for (char munja : ch) {
+			System.out.print(munja +  " ");
+		}
+
+[문제5]
+	B, C, D, Z
+
+[문제6]
+	클래스 이름에는 특수문자(#)가 들어갈 수 없다.
+
+	private class Class02 {
+		String name;
+		int no;
+	}
+	
+[문제7]
+	public class Album {
+		int cdno;
+		String cdname, singer;
+
+	public void setCdno(int cdno) {
+		this.cdno = cdno;
+	}
+
+	public void setCdname(String cdname) {
+		this.cdname = cdname;
+	}
+
+	public void setSinger(String singer) {
+		this.singer = singer;
+	}
+
+	public void getCdno() {
+		return cdno;
+	}
+
+	public void getCdname() {
+		return cdname;
+	}
+
+	public void getSinger() {
+		return singer;
+	}
+
+[문제8]
+	public class Circle extends Round {
+		int rad;
+		double area;
+	
+	public Circle() {
+	}
+
+	public Circle(int rad) {
+		this.rad = rad;
+		setArea();
+	}
+	
+	public int getRad() {
+		return rad;
+	}
+
+	public double getArea() {
+		return area;
+	}
+	
+	public void setRad(int rad) {
+		this.rad = rad;
+	}
+
+	public void setArea() {
+		area = rad * rad * 3.14;
+	}
+	
+	public void setArea(double area) {
+		this.area = area;
+	}	
+	
+	@Override
+	public String toString() {
+		
+		return "반지름 : " + rad + " 이고, 면적 : " + area;
+	}
+
+	}
+
+
+[문제9]
+	
+
+	
